@@ -2,6 +2,8 @@
 
 FormAppendのform_themeのtwigテンプレートをCustomize領域で管理したかったので作りました。
 
+Customize領域に設置したテンプレートを呼び出せるようTwigにパスを通しただけなので、EC-CUBEのテンプレートを上書きできるものではありません。
+
 以下のように@CustomizeをつけるとCustomize/Resource/template内のテンプレートファイルを呼び出すことができます。
 
 ```
