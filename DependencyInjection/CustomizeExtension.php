@@ -34,10 +34,16 @@ class CustomizeExtension extends Extension implements PrependExtensionInterface
     {
         $paths = [];
 
-        $dir = $container->getParameter('kernel.project_dir') . '/app/Customize/Resource/template';
+        $dir = $container->getParameter('kernel.project_dir') . '/app/Customize/Resource/template/default';
 
         if(file_exists($dir)) {
             $paths[$dir] = "Customize";
+        }
+
+        $dir = $container->getParameter('kernel.project_dir') . '/app/Customize/Resource/template/admin';
+
+        if(file_exists($dir)) {
+            $paths[$dir] = "CustomizeAdmin";
         }
 
         if (!empty($paths)) {
