@@ -8,30 +8,38 @@ Customize領域に設置したテンプレートを呼び出せるようTwigに�
 ```
 <?php
 
-namespace Customize\Entity;
+namespace Customize\Form\Extension;
 
-use Doctrine\ORM\Mapping as ORM;
-use Eccube\Annotation as Eccube;
-use Symfony\Component\Validator\Constraints as Assert;
+use Eccube\Form\Type\Front\EntryType;
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @Eccube\EntityExtension("Eccube\Entity\Customer")
- */
-trait CustomerTrait
+class EntryTypeExtension extends AbstractTypeExtension
 {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('nickname', TextType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new Length(['max' => 255]),
+            ],
+            'eccube_form_options' => [
+                'auto_render' => true,
+                'form_theme' => '@Customize/Form/Entry/nickname.twig'
+            ]
+        ]);
+    }
+
     /**
-     * @ORM\Column(name="company_name_vn", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="入力してください")
-     * @Eccube\FormAppend(
-     *     auto_render=true,
-     *     form_theme="@Customize/Form/company_name_vn.twig",
-     *     type="\Symfony\Component\Form\Extension\Core\Type\TextType",
-     *     options={
-     *          "required": true,
-     *          "label": "会社名(VN)"
-     *     })
-     */
-    public $company_name_vn;
+    * {@inheritdoc}
+    */
+    public function getExtendedType()
+    {
+        return EntryType::class;
+    }
 }
 ```
 
@@ -40,29 +48,38 @@ trait CustomerTrait
 ```
 <?php
 
-namespace Customize\Entity;
+namespace Customize\Form\Extension;
 
-use Doctrine\ORM\Mapping as ORM;
-use Eccube\Annotation as Eccube;
-use Symfony\Component\Validator\Constraints as Assert;
+use Eccube\Form\Type\Admin\CustomerType;
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @Eccube\EntityExtension("Eccube\Entity\BaseInfo")
- */
-trait BaseInfoTrait
+class CustomerTypeExtension extends AbstractTypeExtension
 {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('nickname', TextType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new Length(['max' => 255]),
+            ],
+            'eccube_form_options' => [
+                'auto_render' => true,
+                'form_theme' => '@CustomizeAdmin/Form/Customer/nickname.twig'
+            ]
+        ]);
+    }
+
     /**
-     * @ORM\Column(name="company_name_vn", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="入力してください")
-     * @Eccube\FormAppend(
-     *     auto_render=true,
-     *     form_theme="@CustomizeAdmin/Form/company_name_vn.twig",
-     *     type="\Symfony\Component\Form\Extension\Core\Type\TextType",
-     *     options={
-     *          "required": true,
-     *          "label": "会社名(VN)"
-     *     })
-     */
-    public $company_name_vn;
+    * {@inheritdoc}
+    */
+    public function getExtendedType()
+    {
+        return CustomerType::class;
+    }
 }
+
 ```
