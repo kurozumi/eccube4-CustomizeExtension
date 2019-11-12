@@ -22,6 +22,7 @@ class EntryTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nickname', TextType::class, [
+            'label' => 'ニックネーム',
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 255]),
@@ -62,6 +63,7 @@ class CustomerTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nickname', TextType::class, [
+            'label' => 'ニックネーム',
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 255]),
